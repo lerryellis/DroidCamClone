@@ -314,7 +314,12 @@ class MainActivity : AppCompatActivity(), TextureView.SurfaceTextureListener {
     override fun onSurfaceTextureAvailable(surface: SurfaceTexture, w: Int, h: Int) {
         if (cameraHelper == null) openCamera()
     }
-    override fun onSurfaceTextureSizeChanged(surface: SurfaceTexture, w: Int, h: Int) {}
+    override fun onSurfaceTextureSizeChanged(surface: SurfaceTexture, w: Int, h: Int) {
+        // Re-open camera on rotation so preview fills the new orientation
+        cameraHelper?.closeCamera()
+        cameraHelper = null
+        openCamera()
+    }
     override fun onSurfaceTextureDestroyed(surface: SurfaceTexture): Boolean = true
     override fun onSurfaceTextureUpdated(surface: SurfaceTexture) {}
 
