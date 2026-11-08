@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace 'com.personal.droidcamclone'
-    compileSdk 34
+    compileSdk 36
 
     defaultConfig {
         applicationId "com.personal.droidcamclone"
