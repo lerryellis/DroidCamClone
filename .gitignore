@@ -1,0 +1,19 @@
+# Build output
+build/
+app/build/
+
+# Gradle
+.gradle/
+local.properties
+gradle/wrapper/gradle-wrapper.jar
+
+# IDE
+.idea/
+*.iml
+.DS_Store
+
+# NDI native libs (large binaries — not committed)
+app/src/main/jniLibs/
+
+# Signed release APKs (distribute separately)
+*.apk

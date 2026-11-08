@@ -6,4 +6,6 @@
     <string name="switch_camera">Switch Camera</string>
     <string name="status_idle">● Idle — tap Start to stream</string>
     <string name="status_streaming">● Streaming — connect to URL below</string>
+    <string name="mic_off">Mic: OFF</string>
+    <string name="torch_off">Torch: OFF</string>
 </resources>

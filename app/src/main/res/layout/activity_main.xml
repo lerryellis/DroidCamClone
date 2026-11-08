@@ -83,6 +83,41 @@
 
         </LinearLayout>
 
+        <!-- Row 1: Start/Stop + Switch Camera -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginBottom="6dp"
+            android:weightSum="2">
+
+            <Button
+                android:id="@+id/btnStartStop"
+                android:layout_width="0dp"
+                android:layout_height="46dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="4dp"
+                android:text="@string/start_stream"
+                android:backgroundTint="#4CAF50"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                android:textSize="12sp" />
+
+            <Button
+                android:id="@+id/btnSwitchCamera"
+                android:layout_width="0dp"
+                android:layout_height="46dp"
+                android:layout_weight="1"
+                android:layout_marginStart="4dp"
+                android:text="@string/switch_camera"
+                android:backgroundTint="#1976D2"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <!-- Row 2: Mic + Torch -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -91,27 +126,26 @@
             android:weightSum="2">
 
             <Button
-                android:id="@+id/btnStartStop"
+                android:id="@+id/btnMic"
                 android:layout_width="0dp"
                 android:layout_height="46dp"
                 android:layout_weight="1"
-                android:layout_marginEnd="6dp"
-                android:text="@string/start_stream"
-                android:backgroundTint="#4CAF50"
+                android:layout_marginEnd="4dp"
+                android:text="@string/mic_off"
+                android:backgroundTint="@android:color/darker_gray"
                 android:textColor="#FFFFFF"
-                android:textStyle="bold"
-                android:textSize="13sp" />
+                android:textSize="12sp" />
 
             <Button
-                android:id="@+id/btnSwitchCamera"
+                android:id="@+id/btnTorch"
                 android:layout_width="0dp"
                 android:layout_height="46dp"
                 android:layout_weight="1"
-                android:layout_marginStart="6dp"
-                android:text="@string/switch_camera"
-                android:backgroundTint="#1976D2"
+                android:layout_marginStart="4dp"
+                android:text="@string/torch_off"
+                android:backgroundTint="@android:color/darker_gray"
                 android:textColor="#FFFFFF"
-                android:textSize="13sp" />
+                android:textSize="12sp" />
 
         </LinearLayout>
 
