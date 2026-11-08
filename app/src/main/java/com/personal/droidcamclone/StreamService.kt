@@ -76,22 +76,24 @@ class StreamService : Service() {
         super.onDestroy()
     }
 
-    private fun getWifiIp(): String = try {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            val cm = applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-            val network = cm.activeNetwork ?: return "0.0.0.0"
-            val caps = cm.getNetworkCapabilities(network) ?: return "0.0.0.0"
-            if (!caps.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) return "0.0.0.0"
-            cm.getLinkProperties(network)
-                ?.linkAddresses
-                ?.firstOrNull { it.address is java.net.Inet4Address }
-                ?.address?.hostAddress ?: "0.0.0.0"
-        } else {
-            val wm = applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
-            @Suppress("DEPRECATION")
-            Formatter.formatIpAddress(wm.connectionInfo.ipAddress)
-        }
-    } catch (_: Exception) { "0.0.0.0" }
+    private fun getWifiIp(): String {
+        return try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                val cm = applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+                val network = cm.activeNetwork
+                val caps = network?.let { cm.getNetworkCapabilities(it) }
+                if (caps == null || !caps.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) return "0.0.0.0"
+                cm.getLinkProperties(network)
+                    ?.linkAddresses
+                    ?.firstOrNull { it.address is java.net.Inet4Address }
+                    ?.address?.hostAddress ?: "0.0.0.0"
+            } else {
+                val wm = applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
+                @Suppress("DEPRECATION")
+                Formatter.formatIpAddress(wm.connectionInfo.ipAddress)
+            }
+        } catch (_: Exception) { "0.0.0.0" }
+    }
 
     private fun buildNotification(ip: String): Notification {
         val open = PendingIntent.getActivity(
