@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">DroidCam Clone</string>
+    <string name="start_stream">Start Stream</string>
+    <string name="stop_stream">Stop Stream</string>
+    <string name="switch_camera">Switch Camera</string>
+    <string name="status_idle">● Idle — tap Start to stream</string>
+    <string name="status_streaming">● Streaming — connect to URL below</string>
+</resources>

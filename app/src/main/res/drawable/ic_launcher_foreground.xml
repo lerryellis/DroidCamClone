@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- 6-blade iris aperture + center opening (even-odd compound path) -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:fillType="evenOdd"
+        android:pathData="
+            M 92,54 A 38,38 0 1,0 16,54 A 38,38 0 1,0 92,54 Z
+            M 76,34 A 22,22 0 1,0 32,34 A 22,22 0 1,0 76,34 Z
+            M 93,44 A 22,22 0 1,0 49,44 A 22,22 0 1,0 93,44 Z
+            M 93,64 A 22,22 0 1,0 49,64 A 22,22 0 1,0 93,64 Z
+            M 76,74 A 22,22 0 1,0 32,74 A 22,22 0 1,0 76,74 Z
+            M 59,64 A 22,22 0 1,0 15,64 A 22,22 0 1,0 59,64 Z
+            M 59,44 A 22,22 0 1,0 15,44 A 22,22 0 1,0 59,44 Z
+            M 67,54 A 13,13 0 1,0 41,54 A 13,13 0 1,0 67,54 Z" />
+
+    <!-- Outer lens ring (stroke only) -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="3"
+        android:pathData="M 92,54 A 38,38 0 1,0 16,54 A 38,38 0 1,0 92,54 Z" />
+
+    <!-- WiFi broadcast arcs (top-right, 90° sweep each) -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="3.5"
+        android:strokeLineCap="round"
+        android:pathData="
+            M 74.34,30.34 A 8,8 0 0,1 85.66,30.34
+            M 70.1,26.1 A 14,14 0 0,1 89.9,26.1
+            M 65.86,21.86 A 20,20 0 0,1 94.14,21.86" />
+
+    <!-- WiFi source dot -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M 83,36 A 3,3 0 1,0 77,36 A 3,3 0 1,0 83,36 Z" />
+
+</vector>
