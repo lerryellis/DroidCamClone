@@ -7,6 +7,8 @@ import android.app.PendingIntent
 import android.app.Service
 import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.net.wifi.WifiManager
 import android.os.Binder
 import android.os.Build
@@ -45,7 +47,12 @@ class StreamService : Service() {
         val ip = getWifiIp()
         server.currentIp = ip
 
-        startForeground(NOTIFICATION_ID, buildNotification(ip))
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            startForeground(NOTIFICATION_ID, buildNotification(ip),
+                android.content.pm.ServiceInfo.FOREGROUND_SERVICE_TYPE_CAMERA)
+        } else {
+            startForeground(NOTIFICATION_ID, buildNotification(ip))
+        }
 
         if (!server.isAlive) {
             try { server.start() } catch (e: Exception) {
@@ -70,9 +77,20 @@ class StreamService : Service() {
     }
 
     private fun getWifiIp(): String = try {
-        val wm = applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
-        @Suppress("DEPRECATION")
-        Formatter.formatIpAddress(wm.connectionInfo.ipAddress)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            val cm = applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            val network = cm.activeNetwork ?: return "0.0.0.0"
+            val caps = cm.getNetworkCapabilities(network) ?: return "0.0.0.0"
+            if (!caps.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) return "0.0.0.0"
+            cm.getLinkProperties(network)
+                ?.linkAddresses
+                ?.firstOrNull { it.address is java.net.Inet4Address }
+                ?.address?.hostAddress ?: "0.0.0.0"
+        } else {
+            val wm = applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
+            @Suppress("DEPRECATION")
+            Formatter.formatIpAddress(wm.connectionInfo.ipAddress)
+        }
     } catch (_: Exception) { "0.0.0.0" }
 
     private fun buildNotification(ip: String): Notification {

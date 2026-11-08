@@ -7,6 +7,8 @@ import android.content.Intent
 import android.content.ServiceConnection
 import android.content.pm.PackageManager
 import android.graphics.SurfaceTexture
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.net.wifi.WifiManager
 import android.os.Build
 import android.os.Bundle
@@ -137,11 +139,22 @@ class MainActivity : AppCompatActivity(), TextureView.SurfaceTextureListener {
     }
 
     // ── IP display ────────────────────────────────────────────────────────────
-    private fun getWifiIp(): String {
-        val wm = applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
-        @Suppress("DEPRECATION")
-        return Formatter.formatIpAddress(wm.connectionInfo.ipAddress)
-    }
+    private fun getWifiIp(): String = try {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            val cm = applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            val network = cm.activeNetwork ?: return "0.0.0.0"
+            val caps = cm.getNetworkCapabilities(network) ?: return "0.0.0.0"
+            if (!caps.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) return "0.0.0.0"
+            cm.getLinkProperties(network)
+                ?.linkAddresses
+                ?.firstOrNull { it.address is java.net.Inet4Address }
+                ?.address?.hostAddress ?: "0.0.0.0"
+        } else {
+            val wm = applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
+            @Suppress("DEPRECATION")
+            Formatter.formatIpAddress(wm.connectionInfo.ipAddress)
+        }
+    } catch (_: Exception) { "0.0.0.0" }
 
     private fun displayIpAddress() {
         tvIpAddress.text = "WiFi: ${getWifiIp()}"
